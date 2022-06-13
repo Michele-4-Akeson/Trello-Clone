@@ -5,14 +5,14 @@ import { boardContext } from '../../Contexts/AppContexts';
 import * as BackendActions from "../../Actions/BackendActions"
 import { Card } from './Card';
 import {useDrop} from "react-dnd"
-import { filterObjectArray } from '../../CustomHooks/useArrayState';
+import { filterObjectArray, updateObjectArray } from '../../CustomHooks/useArrayState';
 
 export const List = (props) => {
     const {loadedBoard, socket, token, room} = useContext(boardContext)
     const [name, setName] = useState(props.name); // local variable - may not change if property changes in parent componet??
     const [id, setId] = useState(props.id);
     const [previousName, setPreviousName] = useState(props.name);
-    const [cards, setCards] = useState(props.cards)
+    const [cards, setCards] = useState([])
     const [cardName, setCardName] = useState("")
 
 
@@ -20,7 +20,7 @@ export const List = (props) => {
         // The type (or types) to accept - strings or symbols
         accept: 'card',
         drop: (item)=>{
-            pickupCard(item.card, item.listId)
+            pickupCard(item.card, item.listId) // WHEN DROP OCCURS, the props is rerendered such that the cards that was initially provided to the list is present
             return {name:name, id:id}
         },
         // Props to collect
@@ -29,8 +29,17 @@ export const List = (props) => {
           canDrop: monitor.canDrop()
         })
       }))
-   
 
+
+    useEffect(()=>{
+        console.log("RerenderedProps:", props.cards)
+        setCards(props.cards)
+       
+    },[])
+
+    useEffect(()=>{
+        console.log("CARDS:", cards)
+    }, [cards])
     
 
 
@@ -135,25 +144,33 @@ export const List = (props) => {
         if (id != listId){
             console.log(name, " added ", card, "into ", cards)
             const list = {name:name, id:id}
+            
+            
             const response = await BackendActions.addCard(token, loadedBoard, list, card); // change to sharedCard add
             console.log(response.success)
             if (response.success){
-                setCards([...cards, card])
+                setCards([...cards, card]) 
                 //socket.emit("pickup-card", list, card, loadedBoard.id)
                 //setCardName("");
                 
             }
+            
             
         } else {
             console.log("can't drop card", card, " in ", listId)
         }
     }
 
-    function dropCard(card, listId){
+    async function dropCard(card, listId){
         if (id != listId){
-        console.log(name, " dropped ", card, "from ", cards)
-        filterObjectArray(cards, setCards, card)
-        //deleteCard(card.name, card.id)
+            console.log(name, " dropped ", card, "from ", cards)
+            const response = await BackendActions.deleteCard(token, loadedBoard, id, card);
+            if (response.success){
+                 setCards([...cards.filter(c=>c.id != card.id)])
+                //filterObjectArray(cards, setCards, card)
+                //deleteCard(card.name, card.id)
+            }
+            
         }
     }
 
@@ -171,6 +188,7 @@ export const List = (props) => {
                 description={card.description} 
                 checklist={card.checklist} 
                 istId={id} 
+                cards={cards}
                 deleteCard={deleteCard}
                 dropCard={dropCard}/>)}
             </ul>

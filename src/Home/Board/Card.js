@@ -67,8 +67,8 @@ async function updateCardName(){
 
 
 return (
-  <div style={{visibility: isDragging? "hidden":"visible"}}>
-    <li ref={dragRef} onClick={()=>setModalOpen(true)}>
+  <div ref={dragRef} style={{visibility: isDragging? "hidden":"visible"}}>
+    <li onClick={()=>setModalOpen(true)}>
       {name}
     </li>
     

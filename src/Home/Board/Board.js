@@ -76,6 +76,22 @@ export const Board = (props) => {
 
   }
 
+  function getList(id){
+    for (let list of lists){
+      if (list.id == id){
+        return list
+      }
+    }
+  }
+
+  function placeCardProps(id, cards){
+    const list = getList(id)
+    list.cards = cards
+    updateObjectArray(lists, setLists, list)
+  }
+
+
+
   async function deleteList(list){
     const response = await BackendActions.deleteList(token, loadedBoard, list)
     console.log("delete response", response)
@@ -107,7 +123,7 @@ export const Board = (props) => {
           <div>
             <SearchUsers users={users}/>
             <div className='Board'>
-              {lists?.map(list=><List key={list.id} name={list.name} id={list.id} cards={list.cards} updateList={updateList} deleteList={deleteList}/>)}
+              {lists?.map(list=><List key={list.id} name={list.name} id={list.id} cards={list.cards} updateList={updateList} deleteList={deleteList} placeCardProps={placeCardProps}/>)}
             </div>
             <AddList setLists={setLists}/>
           </div>
