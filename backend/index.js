@@ -51,12 +51,14 @@ const profileRoute = require("./Routes/profileRoute");
 const boardRoute = require("./Routes/boardRoute");
 const listRoute = require("./Routes/listRoute");
 const cardRoute = require("./Routes/cardRoute");
+const messageRoute = require("./Routes/messageRoute");
 
 
 app.use("/profile", profileRoute);
 app.use("/board", boardRoute);
 app.use("/list", listRoute);
 app.use("/card", cardRoute);
+app.use("/message", messageRoute)
 
 
 
@@ -157,10 +159,7 @@ io.on('connection', (socket) => {
     })
 
 
-    socket.on("pickup-card", (list, card, roomId)=>{
-        console.log("new card", card)
-        socket.to(roomId).emit("pickup-card", list, card)
-    })
+   
 
 
     socket.on("delete-card", (listId, card, roomId)=>{
@@ -179,6 +178,11 @@ io.on('connection', (socket) => {
         console.log("card changed", card, roomId)
         socket.to(roomId).emit("change-card-description", card, roomId)
 
+    })
+
+
+    socket.on("send-message", (messages, message, roomId)=>{
+        socket.to(roomId).emit("message-sent", messages, message, roomId)
     })
 
 

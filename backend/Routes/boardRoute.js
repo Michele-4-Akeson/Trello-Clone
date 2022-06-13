@@ -97,7 +97,7 @@ router.put('/user', async function(req, res){
         const userData = await Profile.findOne({username:user})
         console.log(token, board, user)
         if (userData){
-            const updateResult = await Board.updateOne({members:{$in:[token]}, name:board.name, id:board.id}, {$push:{members: userData.token}})
+            const updateResult = await Board.updateOne({members:{$in:[token]}, name:board.name, id:board.id}, {$push:{members: userData.token, users:user}})
             console.log(updateResult)
             res.json({success:updateResult.modifiedCount == 1});
         }
@@ -111,6 +111,7 @@ router.put('/user', async function(req, res){
     }
     
 });
+
 
 
 

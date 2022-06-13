@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 
+const messageSchema = new mongoose.Schema({
+    date: String,
+    text: String,
+    user: String
+})
 
 const cardSchema = new mongoose.Schema({
     name: String,
@@ -22,7 +27,8 @@ const boardSchema = new mongoose.Schema({
     name:String,
     id:String,
     image: String,
-    lists:[listSchema]
+    lists:[listSchema],
+    messages:[messageSchema]
 
 
 })

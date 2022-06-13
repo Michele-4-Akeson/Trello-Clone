@@ -7,8 +7,7 @@ const profilePath = "profile"
 const boardPath = "board"
 const listPath = "list"
 const cardPath = "card"
-
-
+const messagePath = "message"
 
 
 
@@ -343,6 +342,51 @@ export async function addUser(token, board, user){
   } catch (error) {
     console.log(error);
 
+  }
+
+}
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////
+// MESSAGES:
+/////////////////////////////////////////////////////////////
+export async function getBoardMessages(token, boardName, boardId){
+  try {
+    console.log(token)
+    const response = await fetch(url + messagePath + "?token=" + token + "&name=" + boardName + "&id=" + boardId, {
+    method:"GET",
+    headers: {
+      "Content-Type":"application/json",
+      "Accept":"application/json"},
+    });
+
+    return response.json()
+
+  } catch (error){
+    console.log(error);
+  }
+  
+}
+
+
+
+export async function sendBoardMessage(token, board, message){
+  try {
+    const response = await fetch(url + messagePath, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({token, board, message})
+    })
+
+    return response.json()
+  } catch (error){
+    console.log(error);
   }
 
 }

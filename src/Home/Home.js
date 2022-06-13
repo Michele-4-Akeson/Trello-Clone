@@ -130,7 +130,7 @@ export const Home = (props) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}>
-                        <boardContext.Provider value={{token:props.token, loadedBoard:board, socket:props.socket, room:board.id}}>
+                        <boardContext.Provider value={{token:props.token, loadedBoard:board, socket:props.socket, room:board.id, username}}>
                             <Board/>  
                         </boardContext.Provider>
                 </motion.div>
