@@ -74,10 +74,10 @@ let onlineUsers = []
 io.on('connection', (socket) => {
     console.log('a user connected: ', socket.id);
 
-    socket.on("logged-on", (username, password)=>{
-      const profile = {username:username, password:password, id:socket.id};
+    socket.on("logged-on", (username, token)=>{
+      const user = {username:username, token:token, id:socket.id};
       console.log("user online: ", username, socket.id)
-      onlineUsers.push(profile);
+      onlineUsers.push(user);
 
       console.log(onlineUsers)
 
@@ -129,12 +129,12 @@ io.on('connection', (socket) => {
 
     socket.on("delete-board", (board)=>{
         console.log(board, "deleted")
-        socket.to(board.id).emit("board-deleted", board)
+        socket.to(board.id).emit("delete-board", board)
     })
 
 
     socket.on("update-list", (room, list)=>{
-        socket.to(room).emit("update-list", list)
+        socket.to(room).emit("update-list", room, list)
     })
 
     socket.on("add-list", (roomId, list)=>{
@@ -157,21 +157,21 @@ io.on('connection', (socket) => {
     })
 
 
-    socket.on("delete-card", (list, cards, roomId)=>{
+    socket.on("delete-card", (listId, cards, roomId)=>{
         console.log("delete card", cards)
-        socket.to(roomId).emit("delete-card", list, cards)
+        socket.to(roomId).emit("delete-card", listId, cards)
     })
 
 
     socket.on("change-card-name", (card, roomId)=>{
-        console.log("card changed", card)
-        socket.to(roomId).emit("change-card-name", card)
+        console.log("card changed", card, roomId)
+        socket.to(roomId).emit("change-card-name", card, roomId)
 
     })
 
     socket.on("change-card-description", (card, roomId)=>{
-        console.log("card changed", card)
-        socket.to(roomId).emit("change-card-description", card)
+        console.log("card changed", card, roomId)
+        socket.to(roomId).emit("change-card-description", card, roomId)
 
     })
 

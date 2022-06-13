@@ -1,17 +1,11 @@
 const mongoose = require("mongoose");
 
 
-const checkListSchema = new mongoose.Schema({
-    text: String,
-    id: String,
-    checked: Boolean
-})
 
 const cardSchema = new mongoose.Schema({
     name: String,
     id: String,
     description: String,
-    checkList:[checkListSchema]
 
 })
 
@@ -24,6 +18,7 @@ const listSchema = new mongoose.Schema({
 
 const boardSchema = new mongoose.Schema({
     members:[String],
+    users:[String],
     name:String,
     id:String,
     image: String,

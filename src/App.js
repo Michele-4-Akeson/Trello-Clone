@@ -1,24 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { useLocalStorage } from "./CustomHooks/UseLocalStorage";
+import { motion, AnimatePresence } from "framer-motion"
+import Auth from "./Authentication/AuthPage";
+import { Home } from "./Home/Home";
+import "./Styles/bigS.css"
+import "./Styles/trelloBoard.css"
+import {io} from "socket.io-client"
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
+
+
+
+const socket = io("http://localhost:5000");
 
 function App() {
+  const [token, setToken] = useLocalStorage("token", null)
+
+
+  function signOut(){
+    localStorage.clear()
+    setToken(null)
+    
+}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <DndProvider backend={HTML5Backend}>
+       <div className="App">
+      <AnimatePresence exitBeforeEnter>
+        {token?
+          <Home token={token} signOut={signOut} socket={socket}/>:
+
+          <motion.div
+            key='authentication'
+            initial={ false }
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}>
+            <Auth setToken={setToken}/>
+          </motion.div>
+
+        }
+      </AnimatePresence>
+    
     </div>
+
+    </DndProvider>
+     
+
+
+   
   );
 }
 

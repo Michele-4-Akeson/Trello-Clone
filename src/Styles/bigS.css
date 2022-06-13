@@ -1,0 +1,117 @@
+.Dashboard{
+
+}
+
+
+.BoardCardContainer{
+    width: 75%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 1rem;
+       
+
+}
+
+
+.board-card {
+    color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .board-card-btn{
+    z-index: 1;
+  }
+  .board-card .board-card-btn{
+    visibility: hidden;
+  }
+
+  .board-card:hover .board-card-btn{
+    visibility: visible;
+  }
+
+
+
+ 
+  .board-card-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(83, 83, 83, 0.5);
+    position: absolute;
+  }
+
+
+  .board-card-btn{
+    z-index: 1;
+  }
+
+
+  .board-card-text {
+    color: black;
+    font-family: 'Pacifico', cursive;
+    font-size: 60px;
+    z-index: 1;
+  }
+
+.Picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+   
+}
+
+.Picture:hover{
+    opacity: 0.5;
+}
+.PictureGrid {
+    padding: 10px;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 1fr;
+
+}
+
+
+.Dropdown{
+  background-color: #fff;
+  z-index: 100;
+  cursor: pointer;
+
+}
+
+.Dropdown:hover{
+  background-color: aquamarine;
+}
+
+
+.Modal{
+    position: fixed;
+    overflow: auto;
+    padding: 20px;
+    width: 50vw;
+    height: 50vh;
+    margin-left: 25vw;
+    margin-top: 25vh;
+    background-color:white;
+    z-index: 1001;
+    border-radius: 20px;
+    box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.3);
+}
+
+.ModalOverlay{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.281);
+    z-index: 1000;
+}
+
+

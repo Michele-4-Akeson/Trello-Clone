@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const profileSchema = new mongoose.Schema({
     username: String,
     password: String,
+    token: String
 })
 
 
