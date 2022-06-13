@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { getBoard } from '../../Actions/BackendActions'
 import { boardContext } from '../../Contexts/AppContexts'
-import setArrayState from '../../CustomHooks/useArrayState'
+import {updateObjectArray} from '../../CustomHooks/useArrayState'
 import { Loader } from '../Loader'
 import { List } from './List'
 import * as BackendActions from "../../Actions/BackendActions"
@@ -70,7 +70,7 @@ export const Board = (props) => {
   async function updateList(list){
     const response = await BackendActions.updateList(token, loadedBoard, list)
     if (response.success){
-      setArrayState(lists, setLists, list)
+      updateObjectArray(lists, setLists, list)
       socket.emit("update-list", room, list);
     }
 

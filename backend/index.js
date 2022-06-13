@@ -152,14 +152,20 @@ io.on('connection', (socket) => {
 
 
     socket.on("add-card", (list, cards, roomId, card)=>{
-        console.log("add card", cards)
+        console.log("add card", cards, + " with ", card)
         socket.to(roomId).emit("add-card", list, cards, card)
     })
 
 
-    socket.on("delete-card", (listId, cards, roomId)=>{
-        console.log("delete card", cards)
-        socket.to(roomId).emit("delete-card", listId, cards)
+    socket.on("pickup-card", (list, card, roomId)=>{
+        console.log("new card", card)
+        socket.to(roomId).emit("pickup-card", list, card)
+    })
+
+
+    socket.on("delete-card", (listId, card, roomId)=>{
+        console.log("delete card", card)
+        socket.to(roomId).emit("delete-card", listId, card)
     })
 
 

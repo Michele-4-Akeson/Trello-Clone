@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { boardContext } from '../../Contexts/AppContexts';
 import * as BackendActions from "../../Actions/BackendActions"
 import { CardModal } from '../Other/CardModal';
+import { useDrag } from 'react-dnd';
 
 
 export const Card = (props) => {
@@ -10,6 +11,25 @@ export const Card = (props) => {
   const [previousName, setPreviousName] = useState(props.name);
   const {socket, token, loadedBoard, room} = useContext(boardContext)
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [{ isDragging, dropResult }, dragRef] = useDrag(() => ({
+    type: 'card',
+    item: {card:{name:name, id:id, description:props.description}, listId:props.listId},
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      dropResult: monitor.getDropResult()
+      //canDrop: monitor.canDrop
+    }),
+    end: (item, monitor)=>{
+      if (monitor.didDrop()){
+        const dropTarget = monitor.getDropResult()
+        console.log(dropTarget)
+        if (dropTarget.id != props.listId){
+          props.dropCard(item.card, props.listId)
+        }
+      }
+    }
+  }))
 
   
   useEffect(()=>{
@@ -47,8 +67,8 @@ async function updateCardName(){
 
 
 return (
-  <div >
-    <li onClick={()=>setModalOpen(true)}>
+  <div style={{visibility: isDragging? "hidden":"visible"}}>
+    <li ref={dragRef} onClick={()=>setModalOpen(true)}>
       {name}
     </li>
     

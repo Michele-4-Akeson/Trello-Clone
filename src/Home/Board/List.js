@@ -3,8 +3,9 @@ import {nanoid} from 'nanoid'
 import { BlurForm } from '../Other/BlurForm';
 import { boardContext } from '../../Contexts/AppContexts';
 import * as BackendActions from "../../Actions/BackendActions"
-
 import { Card } from './Card';
+import {useDrop} from "react-dnd"
+import { filterObjectArray } from '../../CustomHooks/useArrayState';
 
 export const List = (props) => {
     const {loadedBoard, socket, token, room} = useContext(boardContext)
@@ -13,6 +14,21 @@ export const List = (props) => {
     const [previousName, setPreviousName] = useState(props.name);
     const [cards, setCards] = useState(props.cards)
     const [cardName, setCardName] = useState("")
+
+
+    const [{ canDrop, isOver }, dropRef] = useDrop(() => ({
+        // The type (or types) to accept - strings or symbols
+        accept: 'card',
+        drop: (item)=>{
+            pickupCard(item.card, item.listId)
+            return {name:name, id:id}
+        },
+        // Props to collect
+        collect: (monitor) => ({
+          isOver: monitor.isOver(),
+          canDrop: monitor.canDrop()
+        })
+      }))
    
 
     
@@ -41,10 +57,22 @@ export const List = (props) => {
                
         })
 
+        socket.on("pickup-card", (list, card)=>{
+            if (id == list.id){
+                try {
+                    setCards([...cards, card])
+                } catch (error){
+                    console.log(error)
+                    
+                }
+            }
+                
+               
+        })
+
 
         socket.on("delete-card", (listId, cards)=>{
             if (id == listId){
-                console.log("client delete card", cards)
                 try {
                     setCards(cards);
                     
@@ -91,23 +119,6 @@ export const List = (props) => {
         }
     }
 
-    async function acceptCard(cardName, cardId, listId){
-        if (id != listId){
-            console.log("card accepted" , cardName)
-            const list = {name:name, id:id}
-            const card = {name:cardName, id:cardId}
-            const addResponse = await BackendActions.addCard(token, loadedBoard, list, card)
-            if (addResponse.success){
-                setCards([...cards, card])
-                socket.emit("add-card", list, cards, loadedBoard.id, card)
-                
-            } 
-        }
-      
-    }
-
-
-
     async function deleteCard(cardName, cardId){
         console.log(cardId, cardName)
         const card = {name:cardName, id:cardId}
@@ -115,21 +126,53 @@ export const List = (props) => {
 
         if (response.success){
             setCards(cards.filter(c=>c.id != card.id));
-            socket.emit("delete-card", id, cards, loadedBoard.id)
+            socket.emit("delete-card", id, cards, loadedBoard.id)  
+        }
+    }
 
+
+    async function pickupCard(card, listId){
+        if (id != listId){
+            console.log(name, " added ", card, "into ", cards)
+            const list = {name:name, id:id}
+            const response = await BackendActions.addCard(token, loadedBoard, list, card); // change to sharedCard add
+            console.log(response.success)
+            if (response.success){
+                setCards([...cards, card])
+                //socket.emit("pickup-card", list, card, loadedBoard.id)
+                //setCardName("");
+                
+            }
             
-           
+        } else {
+            console.log("can't drop card", card, " in ", listId)
+        }
+    }
+
+    function dropCard(card, listId){
+        if (id != listId){
+        console.log(name, " dropped ", card, "from ", cards)
+        filterObjectArray(cards, setCards, card)
+        //deleteCard(card.name, card.id)
         }
     }
 
 
   return (
-        <div className="list">
+        <div ref={dropRef} className="list" style={{border:isOver?"pink soild 5px":""}}>
             <BlurForm inputStyle={"list-title"} value={name} setValue={setName} submit={changeName}/>
             <button onClick={()=>{props.deleteList({name, id})}}>delete List</button>
 
-            <ul  className="list-items">
-                {cards?.map(card=><Card key={card.id} name={card.name} id={card.id} description={card.description} checklist={card.checklist} listId={id} deleteCard={deleteCard}/>)}
+            <ul className="list-items">
+                {cards?.map(card=><Card 
+                key={card.id} 
+                name={card.name} 
+                id={card.id} 
+                description={card.description} 
+                checklist={card.checklist} 
+                istId={id} 
+                deleteCard={deleteCard}
+                dropCard={dropCard}/>)}
             </ul>
 
             <form onSubmit={(e)=>addCard(e)}>
