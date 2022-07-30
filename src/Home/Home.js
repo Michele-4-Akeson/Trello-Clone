@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { Board } from './Board/Board'
 import { Dashboard } from './Dashboard/Dashboard'
 import { Loader } from './Loader'
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { getAllBoards, getProfile } from '../Actions/BackendActions'
 import { dashboardContext, boardContext } from '../Contexts/AppContexts'
+import { Navbar } from './Navbar/Navbar'
+
 
 export const Home = (props) => {
     const [onDashboard, setOnDashbaord] = useState(true)
     const [onBoard, setOnBoard] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [username, setUsername] = useState(null)
-    const [boards, setBoards] = useState(null)
+    const [boards, setBoards] = useState([])
     const [board, setBoard] = useState(null)
 
 
@@ -37,10 +39,6 @@ export const Home = (props) => {
             props.socket.emit("logged-on", username, props.token)
         }
     }, [username])
-
-
-   
-
 
 
     async function loadPage(){
@@ -73,9 +71,15 @@ export const Home = (props) => {
     function openBoard(name, id){
         setBoard({name:name, id:id})
         switchPage("board")
-        
-        
+       
+    
+    }
 
+    function switchBoard(name, id){
+        setIsLoading(true)
+        setBoard({name:name, id:id})
+        loadPage()
+        switchPage("board")
     }
 
 
@@ -108,20 +112,15 @@ export const Home = (props) => {
     } else {
         return (
             <div>
-                <AnimatePresence exitBeforeEnter>
+                {/*<Masthead switchPage={switchPage} signOut={props.signOut} boards={boards} switchBoard={switchBoards}/>*/}
+                <Navbar switchPage={switchPage} signOut={props.signOut} boards={boards} switchBoard={switchBoard}/>
+               
                 {onDashboard?
-                    <motion.div
-                    key='dashboard'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1 }}>
-                    <dashboardContext.Provider value={{setBoards, token:props.token, username, openBoard, socket:props.socket}}>
-                        <Dashboard boards={boards}/>
-                    </dashboardContext.Provider>
-                  
-                    </motion.div>
-                    
+                    <div>
+                        <dashboardContext.Provider value={{setBoards, token:props.token, username, openBoard, socket:props.socket, username:username}}>
+                            <Dashboard boards={boards}/>
+                        </dashboardContext.Provider>
+                    </div>
                 
                 :
     
@@ -139,7 +138,7 @@ export const Home = (props) => {
                 }
     
     
-            </AnimatePresence>
+            
             </div>
         )
 

@@ -1,0 +1,85 @@
+body{
+  overflow-x: hidden;
+}
+
+
+.App{
+    width: 100vw;
+    height: 100vh;
+    
+  
+}
+
+
+
+
+
+:root {
+    --bg:  #4cb3db;
+    --bg-accent: #3c6183;
+    --bg-highlight:#92c1c7;
+    --text-color: #dadce1;
+    --button-color:rgb(219, 239, 255);
+    --nav-size: 60px;
+    --border: 1px solid #474a4d;
+    --border-radius: 8px;
+    --speed: 500ms; 
+  }
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(0, 0, 0);
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgb(0, 0, 0);
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgb(0, 0, 0);
+  }
+
+
+
+  .outline1{
+    border: red 5px solid;
+  }
+  
+
+  ::-webkit-scrollbar {
+    width: 1.0rem;
+    
+    
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #b8b8b8a6;
+    border-radius: 10px;
+    
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+}
+
+
+.loader{
+  margin: auto;
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-family: "Courgette", cursive;
+}
+
+.loader-icon{
+  width: 5%;
+  height: 5%;
+  color: #484a4d;
+  
+
+}

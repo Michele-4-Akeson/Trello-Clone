@@ -1,13 +1,18 @@
-import { useState } from "react";
+
 import { useLocalStorage } from "./CustomHooks/UseLocalStorage";
 import { motion, AnimatePresence } from "framer-motion"
-import Auth from "./Authentication/AuthPage";
-import { Home } from "./Home/Home";
-import "./Styles/bigS.css"
-import "./Styles/trelloBoard.css"
 import {io} from "socket.io-client"
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { DndProvider } from 'react-dnd'
+import { Home } from "./Home/Home";
+import Auth from "./Authentication/AuthPage";
+
+import "./Styles/app.css"
+import "./Styles/auth.css"
+import "./Styles/dashboard.css"
+import "./Styles/board.css"
+import "./Styles/dropdown.css"
+import "./Styles/modal.css"
+import "./Styles/navbar.css"
+import "./Styles/messageLog.css"
 
 
 
@@ -24,8 +29,7 @@ function App() {
 }
 
   return (
-    <DndProvider backend={HTML5Backend}>
-       <div className="App">
+    <div className="App">
       <AnimatePresence exitBeforeEnter>
         {token?
           <Home token={token} signOut={signOut} socket={socket}/>:
@@ -44,7 +48,7 @@ function App() {
     
     </div>
 
-    </DndProvider>
+    
      
 
 

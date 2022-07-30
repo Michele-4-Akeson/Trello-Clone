@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import { dashboardContext } from '../../Contexts/AppContexts'
 import * as BackendActions from "../../Actions/BackendActions"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 export const BoardCard = (props) => {
   const {openBoard, token, setBoards, socket} = useContext(dashboardContext)
@@ -22,7 +24,9 @@ export const BoardCard = (props) => {
     <div className="board-card"  style={{backgroundImage:`url(${props.image})`, backgroundRepeat:`no-repeat`, backgroundSize:`cover`}}>
         <h1 className='board-card-text'>{props.name}</h1>
         <div className='board-card-overlay' onClick={()=>{openBoard(props.name, props.id)}}/>
-        <button className='board-card-btn' onClick={()=>deleteBoard(props.name, props.id)}>close board</button>
+        <button className='board-card-btn' onClick={()=>deleteBoard(props.name, props.id)}>
+          <FontAwesomeIcon icon={faTrashAlt}/>
+        </button>
     </div>
   )
 }

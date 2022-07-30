@@ -1,0 +1,130 @@
+.dashboard{
+  padding: 50px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: gray;
+  font-weight: 1000;
+}
+
+
+.board-card-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 80%;
+    border-radius: 10px;
+       
+
+}
+
+.board-card {
+    width: 14.5vw;
+    height: 9.1vw;
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 5px;
+  }
+
+  .board-card-btn{
+    z-index: 1;
+  }
+  .board-card .board-card-btn{
+    visibility: hidden;
+  }
+
+  .board-card:hover .board-card-btn{
+    visibility: visible;
+  }
+
+
+
+ 
+  .board-card-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(53, 53, 53, 0.205);
+    border-radius: inherit;
+    position: absolute;
+  }
+
+
+  .board-card-overlay:hover {
+    background-color: rgba(161, 161, 161, 0.205);
+  }
+
+
+  .board-card-btn{
+    z-index: 1;
+    position: absolute;
+    margin: 10%;
+    top:0;
+    right:0;
+    background: none;
+    border: none;
+    color: rgb(241, 241, 241);
+  }
+
+  .board-card-btn:hover{
+    transform: scale(1.5);
+    color: white;
+  }
+
+
+  .board-card-text {
+    color: rgb(255, 255, 255);
+    font-family: 'Pacifico', cursive;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10%;
+    font-size: 20px;
+    z-index: 1;
+  }
+
+.Picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+   
+}
+
+.Picture:hover{
+    opacity: 0.5;
+}
+.PictureGrid {
+    padding: 10px;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 1fr;
+
+}
+
+
+
+.add-board-btn{
+  width: 14.5vw;
+  height: 9.1vw;
+  display: flex;
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  gap: 10px;
+  border-radius: 5px;
+  background-color: rgba(226, 226, 226, 0.699);
+  border: none;
+
+}
+
+
+
+.add-board-btn:hover{
+  background-color: rgba(189, 189, 189, 0.699);
+
+}
+

@@ -251,7 +251,7 @@ export async function addCard(token, board ,list, card){
  }
 
 
- export async function deleteCard(token, board ,listId, card){
+ export async function deleteCard(token, board, listId, card){
   try{
     const response = await fetch(url + cardPath, {
       method:"DELETE",
@@ -287,7 +287,7 @@ export async function addCard(token, board ,list, card){
    
  }
 
- export async function updateCardDescription(token, board ,listId, card){
+ export async function updateCardDescription(token, board, listId, card){
   try{
     const response = await fetch(url + cardPath + "/description", {
       method:"PUT",
@@ -303,6 +303,44 @@ export async function addCard(token, board ,list, card){
   }
    
  }
+
+
+ export async function addCheckbox(token, board, listId, card, checkbox){
+  try{
+    const response = await fetch(url + cardPath + "/checkbox", {
+      method:"POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({token:token, board:board, listId:listId, card:card, checkbox:checkbox})
+    });
+    
+    return response.json();
+
+  } catch (error) {
+    console.log(error);
+
+  }
+   
+ }
+
+ export async function updateCheckbox(token, board, listId, card, checkbox){
+  try{
+    const response = await fetch(url + cardPath + "/checkbox", {
+      method:"PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({token:token, board:board, listId:listId, card:card, checkbox:checkbox})
+    });
+    
+    return response.json();
+
+  } catch (error) {
+    console.log(error);
+
+  }
+   
+ }
+
+
+
 
 
 
@@ -379,6 +417,24 @@ export async function getBoardMessages(token, boardName, boardId){
 export async function sendBoardMessage(token, board, message){
   try {
     const response = await fetch(url + messagePath, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({token, board, message})
+    })
+
+    return response.json()
+  } catch (error){
+    console.log(error);
+  }
+
+}
+
+
+
+
+export async function sendLogMessage(token, board, message){
+  try {
+    const response = await fetch(url + messagePath + "/log", {
       method: "POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({token, board, message})

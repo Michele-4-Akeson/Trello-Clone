@@ -48,5 +48,29 @@ router.post("/", async function(req, res){
 })
 
 
+router.post("/log", async function(req, res){
+    try{
+        console.log("POST/message REQUEST CALLED");
+        const token = req.body.token
+        const board = req.body.board
+        const message = req.body.message
+
+        console.log(token, board, message)
+        const updateResult = await Board.updateOne({members:{$in:[token]}, name:board.name, id:board.id}, {$push:{log:message}})
+        console.log(updateResult)
+        res.json({success:updateResult.modifiedCount == 1});
+        
+      
+
+      
+        
+
+    } catch (error){
+        console.log(error);
+    }
+    
+})
+
+
 
 module.exports = router

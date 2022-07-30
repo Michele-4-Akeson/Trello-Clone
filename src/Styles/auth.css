@@ -1,5 +1,35 @@
+
+
+/*AUTH PAGE*/
+
 .auth-page {
-    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 100vh;
+    margin-right: auto;
+}
+
+
+.left-auth{
+    width: 50%;
+    height: 100vh;
+
+}
+
+.auth-page-image{
+    object-fit:cover;
+    height: 100%;
+    width: 100%;
+
+}
+
+.right-auth{
+    margin: 50px;
+    width: 50%;
+    height: 100%;
+
 }
 
 .auth-heading {
@@ -24,40 +54,49 @@
 }
 
 
-.btn-primary {
-    border: none;
-    color: white;
-    background-color: #7c5dfa;
-    font-family: 'League Spartan', sans-serif;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-radius: 10rem;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: 0.3s;
-    padding: 10px 20px;
-}
-
-.btn-primary:hover {
-    background: rgb(146, 119, 255);
-}
-
-.plus {
-    background-color: #fff;
-    border-radius: 50%;
-    color: #7c5dfa;
-    font-size: 1.2rem;
-    height: 20px;
-    line-height: 23px;
-    width: 20px;
-}
-
 .heading_main {
     font-size: 1.5rem;
     margin: 0;
 }
+
+
+
+
+.user-background {
+    margin: auto;
+    width: 10vw;
+    height: 10vw;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 100%;
+    background:var(--bg); 
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .user-icon{
+      width: 60%;
+      height: 60%;
+  }
+
+
+  .user-container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+
+
+
+
+
+/*FORMS*/
+
+
 
 .form-label {
     margin-bottom: 5px;
@@ -65,6 +104,7 @@
     font-weight: 300;
     margin-bottom: 5px;
 }
+
 
 .form-input {
     margin-top: 5px;
@@ -82,13 +122,33 @@
 
 .form-input:focus {
     outline: none;
-    border: 1px solid #7c5dfa;
+    border: 1px solid var(--bg);
 }
 
-.save-contact {
-    margin-top: 5px;
-    display: inline-block;
+
+/*BUTTONS*/
+
+
+.btn-primary {
+    border: none;
+    color: white;
+    background-color: var(--bg);
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 10px 20px;
 }
+
+.btn-primary:hover {
+    background: var(--bg-accent);
+}
+
 
 .back-button {
     display: flex;
@@ -104,7 +164,3 @@
     color: #737791;
 }
 
-.back-arrow {
-    color: #7c5dfa;
-    margin-right: 10px;
-}

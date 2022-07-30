@@ -1,16 +1,27 @@
 const mongoose = require("mongoose");
 
 
+
+
 const messageSchema = new mongoose.Schema({
     date: String,
+    compare:String,
     text: String,
     user: String
+})
+
+
+const checkboxSchema = new mongoose.Schema({
+    label: String,
+    id: String,
+    checked: Boolean
 })
 
 const cardSchema = new mongoose.Schema({
     name: String,
     id: String,
     description: String,
+    checklist:[checkboxSchema]
 
 })
 
@@ -28,7 +39,8 @@ const boardSchema = new mongoose.Schema({
     id:String,
     image: String,
     lists:[listSchema],
-    messages:[messageSchema]
+    messages:[messageSchema],
+    log:[messageSchema]
 
 
 })

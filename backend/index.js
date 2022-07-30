@@ -162,9 +162,9 @@ io.on('connection', (socket) => {
    
 
 
-    socket.on("delete-card", (listId, card, roomId)=>{
-        console.log("delete card", card)
-        socket.to(roomId).emit("delete-card", listId, card)
+    socket.on("delete-card", (listId, cards, card, roomId)=>{
+        console.log("delete card", cards)
+        socket.to(roomId).emit("delete-card", listId, cards, card)
     })
 
 
@@ -183,6 +183,22 @@ io.on('connection', (socket) => {
 
     socket.on("send-message", (messages, message, roomId)=>{
         socket.to(roomId).emit("message-sent", messages, message, roomId)
+    })
+
+
+    socket.on("send-log", (log, logItem, roomId)=>{
+        socket.to(roomId).emit("log-sent", log, logItem, roomId)
+    })
+
+
+
+    socket.on("add-checkbox", (card, roomId, checklist, checkbox)=>{
+        socket.to(roomId).emit("add-checkbox", card, roomId, checklist, checkbox)
+    })
+
+    socket.on("check", (cardId, roomId, checkbox)=>{
+        socket.to(roomId).emit("check", cardId, roomId, checkbox)
+
     })
 
 

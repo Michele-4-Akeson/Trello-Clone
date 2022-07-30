@@ -4,14 +4,15 @@ import { BlurForm } from '../Other/BlurForm';
 import { boardContext } from '../../Contexts/AppContexts';
 import * as BackendActions from "../../Actions/BackendActions"
 import { Card } from './Card';
-import { filterObjectArray, updateObjectArray } from '../../CustomHooks/useArrayState';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 export const List = (props) => {
     const {loadedBoard, socket, token, room} = useContext(boardContext)
     const [name, setName] = useState(props.name); // local variable - may not change if property changes in parent componet??
     const [id, setId] = useState(props.id);
     const [previousName, setPreviousName] = useState(props.name);
-    const [cards, setCards] = useState([])
+    const [cards, setCards] = useState(props.cards)
     const [cardName, setCardName] = useState("")
 
 
@@ -37,28 +38,12 @@ export const List = (props) => {
                
         })
 
-        socket.on("pickup-card", (list, card)=>{
-            if (id == list.id){
-                try {
-                    setCards([...cards, card])
-                } catch (error){
-                    console.log(error)
-                    
-                }
-            }
-                
-               
-        })
+     
 
-
-        socket.on("delete-card", (listId, cards)=>{
+        socket.on("delete-card", (listId, cards, card)=>{
             if (id == listId){
-                try {
-                    setCards(cards);
-                    
-                } catch (error){
-                    console.log(error)
-                }  
+                console.log(cards)
+                setCards(cards.filter(c=>c.id!=card.id))
             }
         })
 
@@ -72,6 +57,7 @@ export const List = (props) => {
         if (name == ""){
             setName(previousName);
         } else if (name != previousName){
+            props.logChange("changed " + previousName + "'s list name to " +  name)
             setPreviousName(name);
             setName(name)
             const list = {name:name, id:id, cards:cards}
@@ -85,12 +71,13 @@ export const List = (props) => {
         e.preventDefault()
         if (cardName != ""){
             const list = {name:name, id:id, description:""}
-            const card = {name:cardName, id:nanoid()}
+            const card = {name:cardName, id:nanoid(), description:"", checklist:[]}
             const response = await BackendActions.addCard(token, loadedBoard, list, card); // change to sharedCard add
             console.log(response.success)
             if (response.success){
                 setCards([...cards, card])
                 socket.emit("add-card", list, cards, loadedBoard.id, card)
+                props.logChange("added " + cardName + " card to list " + name)
                 setCardName("");
                 
             }
@@ -106,7 +93,8 @@ export const List = (props) => {
 
         if (response.success){
             setCards(cards.filter(c=>c.id != card.id));
-            socket.emit("delete-card", id, cards, loadedBoard.id)  
+            socket.emit("delete-card", id, cards, card, loadedBoard.id)  
+            props.logChange("deleted " + cardName + " card from list " + name)
         }
     }
 
@@ -116,9 +104,11 @@ export const List = (props) => {
 
   return (
         <div className="list">
+             <div onClick={()=>{props.deleteList({name, id})}} className="list-delete-btn">
+                <FontAwesomeIcon  icon={faTrashAlt}  />
+            </div>
             <BlurForm inputStyle={"list-title"} value={name} setValue={setName} submit={changeName}/>
-            <button onClick={()=>{props.deleteList({name, id})}}>delete List</button>
-
+           
             <ul className="list-items">
                 {cards?.map(card=><Card 
                 key={card.id} 
@@ -126,13 +116,16 @@ export const List = (props) => {
                 id={card.id} 
                 description={card.description} 
                 checklist={card.checklist} 
-                istId={id}
+                listId={id}
+                logChange={props.logChange}
                 deleteCard={deleteCard}/>)}
             </ul>
 
             <form onSubmit={(e)=>addCard(e)}>
                 <input className='add-card-btn btn' type="text" value={cardName} onChange={(e)=>setCardName(e.target.value)} placeholder="Add a card"/>
             </form>
+
+           
         </div>
 
 
