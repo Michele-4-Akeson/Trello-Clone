@@ -2,7 +2,7 @@
 
 import {nanoid} from 'nanoid'
 
-const url = "http://localhost:5000/"
+const url = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000/"
 const profilePath = "profile"
 const boardPath = "board"
 const listPath = "list"
