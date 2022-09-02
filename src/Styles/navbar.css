@@ -114,9 +114,12 @@ ul {
   .menu-item .icon-button:hover {
     filter: none;
   }
-  
+
   .menu-item:hover {
-    background-color: #525357;
+    color: #ffffff;
+    font-size:large;
+    transition: font 0.1s;
+
   }
   
   .icon-right {
