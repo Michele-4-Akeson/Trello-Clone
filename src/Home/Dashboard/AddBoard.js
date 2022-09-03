@@ -32,12 +32,8 @@ export const AddBoard = () => {
         e.preventDefault()
         const board = {name:name, id:nanoid(), image:imageLink, lists:[]}
         const response = await addBoard(username, token, board)
-
-        if (response.success){
-            setBoards(boards=>[...boards, board])
-            setImages([])
-        }
-
+        setBoards(boards=>[...boards, board])
+        setImages([])
         setModalOpen(false)
     }
 

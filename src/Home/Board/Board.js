@@ -133,13 +133,9 @@ export const Board = (props) => {
   async function deleteList(list){
     const response = await BackendActions.deleteList(token, loadedBoard, list)
     console.log("delete response", response)
-    if (response){
-      setLists(lists.filter(l=>l.id != list.id))
-      socket.emit("delete-list", list, room)
-      logChange("list " + list.name + " was deleted")
-
-    }
-
+    setLists(lists.filter(l=>l.id != list.id))
+    socket.emit("delete-list", list, room)
+    logChange("list " + list.name + " was deleted")
   }
 
 

@@ -74,13 +74,10 @@ export const List = (props) => {
             const card = {name:cardName, id:nanoid(), description:"", checklist:[]}
             const response = await BackendActions.addCard(token, loadedBoard, list, card); // change to sharedCard add
             console.log(response.success)
-            if (response.success){
-                setCards([...cards, card])
-                socket.emit("add-card", list, cards, loadedBoard.id, card)
-                props.logChange("added " + cardName + " card to list " + name)
-                setCardName("");
-                
-            }
+            setCards([...cards, card])
+            socket.emit("add-card", list, cards, loadedBoard.id, card)
+            props.logChange("added " + cardName + " card to list " + name)
+            setCardName("");
 
            
         }
@@ -90,12 +87,9 @@ export const List = (props) => {
         console.log(cardId, cardName)
         const card = {name:cardName, id:cardId}
         const response = await BackendActions.deleteCard(token, loadedBoard, id, card);
-
-        if (response.success){
-            setCards(cards.filter(c=>c.id != card.id));
-            socket.emit("delete-card", id, cards, card, loadedBoard.id)  
-            props.logChange("deleted " + cardName + " card from list " + name)
-        }
+        setCards(cards.filter(c=>c.id != card.id));
+        socket.emit("delete-card", id, cards, card, loadedBoard.id)  
+        props.logChange("deleted " + cardName + " card from list " + name)
     }
 
 

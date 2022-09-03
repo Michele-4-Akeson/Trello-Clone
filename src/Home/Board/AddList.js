@@ -16,12 +16,11 @@ export const AddList = (props) => {
             const list = {id:id, name:name, cards:[]}
             const response = await addList(token, loadedBoard, list);
             console.log(response)
-            if (response.success){
-                props.setLists(lists=>[...lists, list])
-                socket.emit("add-list", room, list)
-                props.logChange("added the list, " + name + ", to the board")
-                setName('');
-            }
+            props.setLists(lists=>[...lists, list])
+            socket.emit("add-list", room, list)
+            props.logChange("added the list, " + name + ", to the board")
+            setName('');
+           
         }
         
     }
