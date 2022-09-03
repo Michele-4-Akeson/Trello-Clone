@@ -16,7 +16,7 @@ import "./Styles/messageLog.css"
 
 
 
-const socket = io("http://localhost:5000");
+const socket = io(process.env.REACT_BACKEND_URL || "https://my-trello-app-clone.herokuapp.com/" || "http://localhost:5000");
 
 function App() {
   const [token, setToken] = useLocalStorage("token", null)
