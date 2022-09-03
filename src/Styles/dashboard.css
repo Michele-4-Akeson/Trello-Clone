@@ -3,6 +3,8 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   color: gray;
   font-weight: 1000;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -13,6 +15,7 @@
     align-items: center;
     width: 80%;
     border-radius: 10px;
+
        
 
 }
@@ -26,6 +29,7 @@
     align-items: center;
     position: relative;
     border-radius: 5px;
+    z-index: 1;
   }
 
   .board-card-btn{
@@ -45,14 +49,14 @@
   .board-card-overlay {
     width: 100%;
     height: 100%;
-    background: rgba(53, 53, 53, 0.205);
+    background: rgba(151, 151, 151, 0.205);
     border-radius: inherit;
     position: absolute;
   }
 
 
   .board-card-overlay:hover {
-    background-color: rgba(161, 161, 161, 0.205);
+    background-color: rgba(192, 192, 192, 0.205);
   }
 
 
@@ -116,15 +120,43 @@
   position: relative;
   gap: 10px;
   border-radius: 5px;
-  background-color: rgba(226, 226, 226, 0.699);
+  background-color: rgba(226, 226, 226);
   border: none;
+  z-index: 1;
 
 }
 
 
 
 .add-board-btn:hover{
-  background-color: rgba(189, 189, 189, 0.699);
+  background-color: rgba(189, 189, 189);
 
 }
+
+
+
+.SVGBoard{
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+
+.Page{
+  transition: transform 0.5s, fill 0.5s;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.Page:hover{
+  transform: scale(1.2);
+  fill: rgb(73, 250, 67);
+
+}
+
+
 

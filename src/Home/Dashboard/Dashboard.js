@@ -1,10 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import { dashboardContext } from '../../Contexts/AppContexts'
 import { AddBoard } from './AddBoard'
 import { BoardCard } from './BoardCard'
+import { SVGBoard } from './SVGBoard';
 
 export const Dashboard = (props) => {
   const {username} = useContext(dashboardContext)
+  
 
   return (
     <div className='dashboard'>
@@ -14,6 +16,7 @@ export const Dashboard = (props) => {
           <AddBoard/>
         </div>
 
+        <SVGBoard/>
     </div>
   
    

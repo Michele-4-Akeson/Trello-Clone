@@ -112,7 +112,7 @@ export const MessageLog = (props) => {
             </div>
 
             <form className='send-form' onSubmit={sendMessage}>
-                <textarea className='send-input' type="submit" value={text} onChange={(e)=>{setText(e.target.value)}} placeholder={"message...."}/>
+                <input type="text" value={text} onChange={(e)=>{setText(e.target.value)}} placeholder={"message...."}/>
                 <button type='submit' className='send-button'>
                     <FontAwesomeIcon icon={faPaperPlane}/>
                 </button>

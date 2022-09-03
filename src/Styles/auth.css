@@ -164,3 +164,23 @@
     color: #737791;
 }
 
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 768px) {
+
+}
+
+
+
+/* Medium devices (landscape tablets, 768px and up to 992px) */
+@media only screen and (min-width: 768px) {
+
+}
+
+
+
+/* Large devices (laptops/desktops, 992px and up to 1200) */
+@media only screen and (min-width: 992px){
+    
+}

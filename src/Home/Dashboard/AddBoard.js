@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faTrello} from "@fortawesome/free-brands-svg-icons"
 import { nanoid} from 'nanoid'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { addBoard } from '../../Actions/BackendActions'
 import { getImages } from '../../Actions/UnSplashActions'
 import { dashboardContext } from '../../Contexts/AppContexts'
@@ -13,7 +13,7 @@ const defaults = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
 export const AddBoard = () => {
     const [isModalOpen, setModalOpen] = useState(false)
     const [name, setName] = useState("")
-    const [id, setId] = useState(nanoid())
+    const ref = useRef(null)
     const [search, setSearch] = useState("")
     const [imageLink, setImageLink] = useState("")
     const [images, setImages] = useState([])
@@ -23,6 +23,10 @@ export const AddBoard = () => {
       getRandom()
 
     }, [])
+
+    useEffect(()=>{
+      if(isModalOpen) ref.current.focus()
+    }, [isModalOpen])
 
     async function createBoard(e){
         e.preventDefault()
@@ -79,7 +83,7 @@ export const AddBoard = () => {
 
               <form className='board-modal-form' onSubmit={createBoard}>
                   <label>Board title</label>
-                  <input required type="text" onChange={(e)=>setName(e.target.value)}/>
+                  <input ref={ref} required type="text" onChange={(e)=>setName(e.target.value)}/>
               </form>
 
               <div className='split-modal'>
@@ -105,6 +109,7 @@ export const AddBoard = () => {
                 </div>
 
               </div>
+              <button onClick={createBoard} className='card-save-button'>Save</button>
            
           </div> 
 
