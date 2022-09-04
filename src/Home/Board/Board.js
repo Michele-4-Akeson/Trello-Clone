@@ -188,6 +188,7 @@ export const Board = (props) => {
               setMessagesOpen={setMessagesOpen}
               logOpen={logOpen}
               setLogOpen={setLogOpen}/>
+            
             <div className='board'>
               {lists?.map(list=>
                   <List 

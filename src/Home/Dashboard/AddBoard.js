@@ -84,9 +84,10 @@ export const AddBoard = () => {
 
               <div className='split-modal'>
                 <div className='left-item'>
-                  <form  className="board-modal-form" onSubmit={searchImages}>
+                  <form className="board-modal-form" onSubmit={searchImages}>
                       <label>Background</label>
                       <input required type="text" onChange={(e)=>setSearch(e.target.value)}/>
+                      <button className='card-save-button' type='submit'>search</button>
                   </form>
                   <div className='PictureGrid'>
                   {images.map((link, index)=><img className='Picture' key={index} src={link} onClick={()=>setImageLink(link)}/>)}
