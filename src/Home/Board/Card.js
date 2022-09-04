@@ -107,15 +107,11 @@ async function updateCheckbox(checkbox){
 
 return (
   <div>
-    <li>
+    <li onClick={()=>setModalOpen(true)}>
       {name}
       <div className='card-btn-container'>
-      <div onClick={()=>setModalOpen(true)} className="card-btn">
+      <div className="card-btn">
           <FontAwesomeIcon  icon={faEdit}  />
-      </div>
-
-      <div onClick={()=>{props.deleteCard(name, id)}} className="card-btn">
-          <FontAwesomeIcon  icon={faTrashAlt}  />
       </div>
     
       </div>
@@ -127,6 +123,10 @@ return (
       <div className='card-modal'>
         <div>
           <label className='board-modal-header'>Card</label>
+        </div>
+
+        <div onClick={()=>{props.deleteCard(name, id)}} className="delete-card-btn">
+          <FontAwesomeIcon  icon={faTrashAlt}  />
         </div>
            
             <hr></hr>
