@@ -196,9 +196,9 @@ io.on('connection', (socket) => {
         socket.to(roomId).emit("add-checkbox", card, roomId, checklist, checkbox)
     })
 
-    socket.on("check", (cardId, roomId, checkbox)=>{
-        socket.to(roomId).emit("check", cardId, roomId, checkbox)
-
+    socket.on("check", (roomId, checkbox)=>{
+        console.log(checkbox)
+        socket.to(roomId).emit("check", roomId, checkbox)
     })
 
 

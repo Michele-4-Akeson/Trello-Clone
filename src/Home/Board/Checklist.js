@@ -7,15 +7,10 @@ import { Checkbox } from '../Other/Checkbox'
 
 export const Checklist = (props) => {
     const [label, setLabel] = useState("")
-    const [checklist, setChecklist] = useState(props.checklist)
     const {socket, room} = useContext(boardContext)
     
     useEffect(()=>{
-        socket.on("add-checkbox", (card, roomId, checklist, checkbox)=>{
-            if (room == roomId && props.cardId == card.id){
-              setChecklist([...checklist, checkbox])
-            }
-          })
+  
 
      
       
@@ -27,16 +22,13 @@ export const Checklist = (props) => {
         e.preventDefault()
         if (label != ""){
             const checkbox = {label:label, id:nanoid(), checked:false}
-            props.addCheckbox(checklist, checkbox)
-            setChecklist([...checklist, checkbox])
-            setLabel("")
+            props.addCheckbox(checkbox)
         }
         
     }
 
     function checkUpdate(checkbox){
-      console.log("xxx")
-      props.updateCheckbox(checklist, checkbox)
+      props.updateCheckbox(checkbox)
     }
 
 
@@ -51,7 +43,7 @@ export const Checklist = (props) => {
             </button>
         </form>
          <div className='checklist'>
-            {checklist?.map((checkbox, index)=>
+            {props.checklist?.map((checkbox, index)=>
               <Checkbox 
                 key={index} 
                 label={checkbox.label} 

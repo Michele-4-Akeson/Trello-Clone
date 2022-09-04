@@ -7,20 +7,19 @@ export const Checkbox = (props) => {
 
 
     useEffect(()=>{
-      socket.on("check", (cardId, roomId, checkbox)=>{
-        if (room == roomId && props.cardId == cardId){
-          if (checkbox.id == props.id){
-            setChecked(checkbox.checked)
-          }
+      socket.on("check", (roomId, checkbox) =>{
+        console.log(checkbox)
+        if (room == roomId && props.id == checkbox.id){
+          setChecked(checkbox.checked)
+          props.checkUpdate(checkbox)
         }
-       
       })
-    }, [])
+    })
 
     function checkboxClicked(){
         const checkbox = {label:props.label, id:props.id, checked:!checked}
         setChecked(!checked)
-        socket.emit("check", props.cardId, room, checkbox)
+        socket.emit("check", room, checkbox)
         props.checkUpdate(checkbox)
     }
 

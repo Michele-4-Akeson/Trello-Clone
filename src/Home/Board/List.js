@@ -24,6 +24,8 @@ export const List = (props) => {
             }
         })
 
+        
+
         socket.on("add-card", (list, cards, card)=>{
             if (id == list.id){
                 console.log("client update card" , cards)
@@ -91,6 +93,8 @@ export const List = (props) => {
         socket.emit("delete-card", id, cards, card, loadedBoard.id)  
         props.logChange("deleted " + cardName + " card from list " + name)
     }
+
+
 
 
 

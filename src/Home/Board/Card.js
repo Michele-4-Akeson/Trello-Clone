@@ -6,7 +6,7 @@ import { BlurForm } from '../Other/BlurForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBarsStaggered, faEdit, faListCheck, faNoteSticky, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Checklist } from './Checklist';
-
+import { updateObjectArray } from '../../CustomHooks/useArrayState';
 
 
 export const Card = (props) => {
@@ -14,6 +14,7 @@ export const Card = (props) => {
   const [id, setId] = useState(props.id)
   const [previousName, setPreviousName] = useState(props.name);
   const [description, setDescription] = useState(props.description)
+  const [checklist, setChecklist] = useState(props.checklist)
   const {socket, token, loadedBoard, room} = useContext(boardContext)
   const [modalOpen, setModalOpen] = useState(false);
   
@@ -32,7 +33,14 @@ export const Card = (props) => {
       }
     })
 
+    socket.on("add-checkbox", (card, roomId, checklist, checkbox)=>{
+      if (room == roomId && props.id == card.id){
+        console.log(checkbox)
+        setChecklist([...checklist, checkbox])
+      }
+    })
 
+    
    
   }, [])
 
@@ -66,23 +74,28 @@ async function updateDescription(){
   }
 }
 
-async function addCheckbox(checklist, checkbox){
+async function addCheckbox(checkbox){
   const card = {name:name, id:id}
   const response = await BackendActions.addCheckbox(token, loadedBoard, props.listId, card, checkbox)
   props.logChange("added item " + checkbox.label + " to card " + name)
   socket.emit("add-checkbox", card, room, checklist, checkbox)
+  setChecklist([...checklist, checkbox])
+
 
 }
 
-async function updateCheckbox(checklist, checkbox){
+async function updateCheckbox(checkbox){
   const card = {name:name, id:id}
+  console.log(checkbox)
+  updateObjectArray(checklist, setChecklist, checkbox)
   const response = await BackendActions.updateCheckbox(token, loadedBoard, props.listId, card, checkbox)
-
+  
   if (checkbox.checked){
     props.logChange("item " + checkbox.label + " of card " + name + " was completed")
   } else {
     props.logChange("item " + checkbox.label + " of card " + name + " incomplete")
   }
+  
  
 
 }
@@ -140,7 +153,7 @@ return (
 
                 <div className='right-item'>
                   <h3><FontAwesomeIcon icon={faListCheck}/>Checklist</h3>
-                  <Checklist cardId={id} checklist={props.checklist} addCheckbox={addCheckbox} updateCheckbox={updateCheckbox}/>
+                  <Checklist cardId={id} checklist={checklist} addCheckbox={addCheckbox} updateCheckbox={updateCheckbox}/>
                 </div>
 
               </div>
