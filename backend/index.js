@@ -39,6 +39,7 @@ Database Connection
 
 try{
     mongoose.connect(process.env.MONGO_DB_CONNECTION, ()=>{
+        console.log(process.env.MONGO_DB_CONNECTION)
         console.log("Connected to mongoDB");
     })
 } catch (error){
