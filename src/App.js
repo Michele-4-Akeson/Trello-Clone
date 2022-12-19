@@ -15,7 +15,6 @@ import "./Styles/navbar.css"
 import "./Styles/messageLog.css"
 
 
-
 const socket = io(process.env.REACT_BACKEND_URL || "https://my-trello-backend-vgmy.onrender.com" || "http://localhost:5000");
 
 function App() {
