@@ -3,13 +3,13 @@
 import {nanoid} from 'nanoid'
 
 
-const url = process.env.REACT_APP_BACKEND_URL || "https://my-trello-backend-vgmy.onrender.com" || "http://localhost:5000/"
+const url = process.env.REACT_APP_BACKEND_URL || "https://my-trello-backend-vgmy.onrender.com" || "http://localhost:5000"
 console.log(url)
-const profilePath = "profile"
-const boardPath = "board"
-const listPath = "list"
-const cardPath = "card"
-const messagePath = "message"
+const profilePath = "/profile"
+const boardPath = "/board"
+const listPath = "/list"
+const cardPath = "/card"
+const messagePath = "/message"
 
 
 
@@ -21,6 +21,7 @@ const messagePath = "message"
 
  export async function getToken(username, password){
   try {
+    console.log(url, "-------------------")
     const response = await fetch(url + profilePath + "/token" + "?username=" + username + "&" + "password=" + password, {
       method:"GET",
       headers: {
