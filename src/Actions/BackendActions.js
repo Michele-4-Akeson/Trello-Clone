@@ -21,7 +21,7 @@ const messagePath = "message"
 
  export async function getToken(username, password){
   try {
-    console.log(url, "-------------------")
+    console.log("FULL OUTPUT:", url + profilePath + "/token" + "?username=" + username + "&" + "password=" + password)
     const response = await fetch(url + profilePath + "/token" + "?username=" + username + "&" + "password=" + password, {
       method:"GET",
       headers: {
